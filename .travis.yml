@@ -1,5 +1,6 @@
 os: linux
-sudo: required
+sudo: false
+root: false
 language:
   - minimal
 services:

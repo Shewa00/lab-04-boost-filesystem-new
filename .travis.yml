@@ -25,7 +25,7 @@ jobs:
         - ctest -V
     - name: "checks"
       script:
-        - chmod 755 scripts/*.sh
+        - chmod 755 scripts/checks.sh
         - docker run -v `pwd`:`pwd` -w `pwd` -t rusdevops/bootstrap-cpp scripts/checks.sh  
 addons:
   apt:

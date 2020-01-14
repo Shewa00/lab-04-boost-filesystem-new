@@ -1,37 +1,14 @@
-os: linux
-sudo: false
-root: false
-language:
-  - minimal
-services:
-  - docker
+language: cpp
 
-compiler:
-  -gcc
+script:
+- cmake -H. -B_build -DCMAKE_INSTALL_PREFIX=_install
+- cmake --build _build
+- cmake --build _build --target install
 
-before_install:
-  - pip install --user cpp-coveralls
-
-install:
-  - if [ "$CXX" = "g++" ]; then export CXX="g++-8" CC="gcc-8"; fi
-  - mkdir build
-  - cd build
-  - cmake ..
-  - make
-
-jobs:
-  include:
-    - name: "tests"
-      script:
-        - ctest -V
-    - name: "checks"
-      script:
-        - chmod 755 scripts/checks.sh
-        - docker run -v `pwd`:`pwd` -w `pwd` -t rusdevops/bootstrap-cpp scripts/checks.sh  
 addons:
   apt:
     sources:
-      - ubuntu-toolchain-r-test
+      - george-edison55-precise-backports
     packages:
-      - gcc-8
-      - g++-8
+      - cmake
+      - cmake-data
